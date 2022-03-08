@@ -1,5 +1,5 @@
 import math
-import random
+import random,time
 
 import pygame
 from pygame import mixer
@@ -15,7 +15,7 @@ background = pygame.image.load('background.png')
 
 # Sound
 mixer.music.load("background.wav")
-mixer.music.play(-1)
+mixer.music.play(0)
 
 # Caption and Icon
 pygame.display.set_caption("Space Invader")
@@ -98,6 +98,26 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):
     else:
         return False
 
+# enemy shooting
+enemy_bullets = []
+enemy_bulletY = 0
+enemy_bulletX = 0
+# enemy_bulletX_change =[]
+# enemy_bulletY_change =[]
+
+for _ in range(4):
+    enemy_bullets.append(pygame.image.load('bullet.png'))
+    # enemy_bulletX.append(random.randint(0, 736))
+    # enemy_bulletY.append(random.randint(50, 150))
+    # enemy_bulletX_change.append(500)
+    # enemy_bulletY_change.append(20)
+
+to_fire = []
+bullet_state_enemy = 'fire'
+def fire_bullet_enemy(x, y,index = 0):
+    global bullet_state_enemy
+    bullet_state_enemy = "fire"
+    screen.blit(enemy_bullets[index], (x, y))
 
 # Game Loop
 running = True
@@ -167,7 +187,25 @@ while running:
             enemyX[i] = random.randint(0, 736)
             enemyY[i] = random.randint(50, 150)
 
+        # Enemy shooting logic.
+
+      
+        # enemy_bulletY[]
+        # to_fire.append()
+        if bullet_state_enemy == 'ready':
+            enemy_bulletY = enemyY[i]
+            enemy_bulletX = enemyX[i]
+            bullet_state_enemy = 'fire'
         enemy(enemyX[i], enemyY[i], i)
+
+    
+    # After a time lapse of 2 seconds, each bullet will be fired.
+    if bullet_state_enemy == 'fire':
+        fire_bullet_enemy(enemy_bulletX,enemy_bulletY,index = 0)
+        enemy_bulletY += 10
+    
+    if enemy_bulletY > 700:
+        bullet_state_enemy = 'ready'
 
     # Bullet Movement
     if bulletY <= 0:
@@ -177,6 +215,7 @@ while running:
     if bullet_state is "fire":
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
+        # print(bulletY)
 
     player(playerX, playerY)
     show_score(textX, testY)
