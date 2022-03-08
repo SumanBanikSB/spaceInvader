@@ -102,15 +102,11 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):
 enemy_bullets = []
 enemy_bulletY = 0
 enemy_bulletX = 0
-# enemy_bulletX_change =[]
-# enemy_bulletY_change =[]
+
 
 for _ in range(4):
     enemy_bullets.append(pygame.image.load('bullet.png'))
-    # enemy_bulletX.append(random.randint(0, 736))
-    # enemy_bulletY.append(random.randint(50, 150))
-    # enemy_bulletX_change.append(500)
-    # enemy_bulletY_change.append(20)
+ 
 
 to_fire = []
 bullet_state_enemy = 'fire'
